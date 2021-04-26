@@ -1,8 +1,12 @@
-##Java Collection
-###1.ArrayList(基于动态数组实现，支持随机访问，线程不安全)
+## Java Collection
+
+### 1.ArrayList(基于动态数组实现，支持随机访问，线程不安全)
+
 原型：
+
 ```java
-public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAccess, Cloneable, Serializable{
+public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAccess, Cloneable, Serializable
+{
     ...
     private static final int DEFAULT_CAPACITY = 10;//默认容器长度
     private static final Object[] EMPTY_ELEMENTDATA = new Object[0];//空数组异常处理节约空间
@@ -12,26 +16,26 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
     ...
 }
 ```
+
 构造方法：
+
 ```text
 ArrayList()：构造一个初始容量为 10 的空列表
 ArrayList(initialCapacity)：构造一个初始容量为 initialCapacity 的空列表
 ArrayList(Collection<?extends E>c)：构造一个包含指定 Collection 元素的列表，这些元素是按照该 Collection 的迭代器返回它们的顺序排列的
 ```
-扩容：
-ensureCapacityInternal() 方法来检查容量足够，调用 grow() 实现 size+1，newCapacity = oldCapacity + (oldCapacity >> 1)，copyOf原数组
+
+扩容： ensureCapacityInternal() 方法来检查容量足够，调用 grow() 实现 size+1，newCapacity = oldCapacity + (oldCapacity >> 1)，copyOf原数组
 因此最好在创建 ArrayList 对象时就指定大概的容量大小，减少扩容操作的次数。
 
-删除：
-调用 System.arraycopy() 将 index+1 后面的元素都复制到 index 位置上，该操作的时间复杂度为 O(N)， ArrayList 删除元素的代价是非常高的。
+删除： 调用 System.arraycopy() 将 index+1 后面的元素都复制到 index 位置上，该操作的时间复杂度为 O(N)， ArrayList 删除元素的代价是非常高的。
 
-序列化：
-transient防止自动序列化
-writeObject() 和 readObject() 来控制只序列化数组中有元素填充那部分内容。
+序列化： transient防止自动序列化 writeObject() 和 readObject() 来控制只序列化数组中有元素填充那部分内容。
 
+### 2.HashMap(基于哈希表实现，线程不安全)
 
-###2.HashMap(基于哈希表实现，线程不安全)
 原型：
+
 ```java
 public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Cloneable, Serializable
 {
@@ -51,17 +55,21 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
     ...
 }
 ```
+
 hash：
+
 ```java
-static final int hash(Object key) {
+static final int hash(Object key){
         int h;
-        return key == null ? 0 : (h = key.hashCode()) ^ h >>> 16;
-    }
-    int index = (table.size - 1) & hash;
+        return key==null?0:(h=key.hashCode())^h>>>16;
+        }
+        int index=(table.size-1)&hash;
 ```
-右移16位:让高位也参与运算  ^:更加散列减少碰撞次数
+
+右移16位:让高位也参与运算 ^:更加散列减少碰撞次数
 
 put：
+
 ```text
 1.判断键值对数组table[i]是否为空或为null，否则执行resize()进行扩容；
 2.根据键值key计算hash值得到插入的数组索引i，如果table[i]==null，直接新建节点添加，转向⑥，如果table[i]不为空，转向③；
@@ -72,9 +80,11 @@ put：
 ```
 
 resize：
+
 ```java
 //链表重构检验
-e.hash & oldCap
+e.hash&oldCap
 ```
+
 构建新数组，然后转移旧数组元素的方式来实现
 
