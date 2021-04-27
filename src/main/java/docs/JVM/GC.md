@@ -111,7 +111,7 @@ Parallel Old 收集器是 Parallel Scavenge 的老年代版本，与 Parallel Sc
 
 缺点：吞吐量低 无法处理浮动垃圾，导致频繁 Full GC 使用“标记-清除”算法产生碎片空间
 
-7.G1 通用垃圾收集器（标记整理、三色标记算法、Java 1.8 之后默认）
+7.<font color = 'red'>G1 通用垃圾收集器</font>（标记整理、三色标记算法、Java 1.8 之后默认）
 
 将堆划分为一块块独立的 Region。进行垃圾收集时，先估计每个 Region 中垃圾的数量，每次从垃圾回收价值最大的 Region 开始回收，从而获得最大的回收效率。
 
@@ -127,6 +127,8 @@ Humongous区域是为了那些存储超过50%标准region大小的对象而设�
 
 
 gc流程：
+
+![G1GC](https://upload-images.jianshu.io/upload_images/4222138-f2c03483046ad33f.png?imageMogr2/auto-orient/strip|imageView2/2/w/743/format/webp)
 
 * 初始标记 Initial Mark：
   负责标记所有能被直接可达的根对象(原生栈对象、全局对象、JNI对象)，初始标记需要将Mutator线程(Java应用线程)暂停掉，也就是需要一个STW的时间段。
@@ -163,4 +165,5 @@ gc流程：
   RSet梳理，启发式算法会根据活跃度和RSet尺寸对分区定义不同等级，同时RSet数理也有助于发现无用的引用。    
   整理堆分区，为混合收集周期识别回收收益高(基于释放空间和暂停目标)的老年代分区集合；
   识别所有空闲分区，即发现无存活对象的分区。该分区可在清除阶段直接回收，无需等待下次收集周期。
+
 
