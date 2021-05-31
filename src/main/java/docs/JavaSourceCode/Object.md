@@ -3,9 +3,9 @@
 ### equal ==
 
 ```java
-public boolean equals(Object obj){
+    public boolean equals(Object obj){
         return this==obj;
-        }
+    }
 ```
 
 equals:
