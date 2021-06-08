@@ -102,7 +102,7 @@ Arrays.deepEquals(T[],T[]):比较两个多维数组是否相同
 ### 排序
 
 ```text
-Arrays.sort(T[]):数组排序(默认升序)  基本类型 DP快排 | Object[] a ComparableTimSort |T[] TimSort
+Arrays.sort(T[]):数组排序(默认升序)  基本类型 DP快排 | Object[] ComparableTimSort |T[] TimSort
 Arrays.sort(T[],from,to):[from to) 范围内排序
 Arrays.legacyMergeSort(T[]):传统合并排序
 
@@ -141,4 +141,13 @@ i为前一元素值，j为当前元素值，返回值在j上，0位置上i为0
 Java 不直接支持泛型数组（可用其他方式实现），因此Arrays中方法大多选择重载，而容器类中采用泛型复用很多代码。
 为什么不支持泛型数组？
 泛型的本身特性（类型擦除）？Java本身向后兼容的特点？容器类的出现？开发成本？
+
+不能实例化一个参数化类型的数组，但是却可以参数化数组本身的类型
+T[] array =new T[]{};                                x
+public static<T> T[] name(T[] args){return args;};   √
+Example:
+Integer[] a = {1, 2, 3};
+String[] b = {"a", "b", "c"};
+System.out.println(Arrays.toString(name(a)));
+System.out.println(Arrays.toString(name(b)));
 ```
